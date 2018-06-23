@@ -14,14 +14,14 @@ public:
     }
 
     T& operator[](std::size_t idx) {
-        if (idx >= m_size - 1) {
+        if (idx > m_size - 1) {
             throw std::runtime_error("register out of bounds");
         }
         return m_reg[idx];
     }
 
     const T& operator[](std::size_t idx) const {
-        if (idx >= m_size - 1) {
+        if (idx > m_size - 1) {
             throw std::runtime_error("register out of bounds");
         }
         return m_reg[idx];

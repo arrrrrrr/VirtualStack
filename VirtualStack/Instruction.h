@@ -10,7 +10,7 @@ public:
     }
 
     Instruction(uint8_t dst, AddrType dst_type, OpCode opcode)
-        : dst(src), dst_type(dst_type), src(0), src_type(), opcode(opcode)
+        : dst(dst), dst_type(dst_type), src(0), src_type(), opcode(opcode)
     {
     }
 

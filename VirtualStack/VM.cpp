@@ -10,7 +10,7 @@ uint8_t VM::execute(std::vector<uint8_t>& bytes)
     bool halted = false;
 
     while (!halted) {
-        execute_curr_inst();
+        halted = execute_curr_inst();
     }
     
     // return the result
@@ -42,7 +42,7 @@ void VM::load_code(std::vector<Function>& fns)
     while (pos != curr) {
         uint32_t inst = *pos;
         // matched a call instruction
-        if ((inst & static_cast<uint32_t>(OpCode::CAL)) == static_cast<uint32_t>(OpCode::CAL)) {
+        if ((inst & 0x7) == static_cast<uint32_t>(OpCode::CAL)) {
             // extract the function id
             int fn = (inst >> 3) & 0xfff;
             // replace it with the code offset
@@ -92,7 +92,8 @@ void VM::build_stack_frame(uint32_t *new_ip, uint16_t * argptr, int num_args)
 void VM::do_pop(int offset)
 {
     // use a special register as the return value register
-    m_reg[8] = static_cast<uint8_t>(*(m_bp + offset));
+    uint8_t result = static_cast<uint8_t>(*(m_bp + offset));
+    m_reg[8] = result;
 }
 
 void VM::do_not(int src)
@@ -223,12 +224,12 @@ bool VM::execute_curr_inst()
 {
     uint32_t bytes = *m_ip;
 
-    uint8_t op = bytes & 0x07;
+    OpCode op = static_cast<OpCode>(bytes & 0x07);
     bytes >>= 3;
     uint8_t dst_value, src_value;
     AddrType dst_type, src_type;
 
-    switch (static_cast<OpCode>(op)) {
+    switch (op) {
         case OpCode::RET:
             if (do_ret()) {
                 return true;
@@ -255,12 +256,14 @@ bool VM::execute_curr_inst()
             bytes >>= 5;
             src_value = bytes & 0x7;
             do_add(src_value, dst_value);
+            break;
         case OpCode::AND:
             bytes >>= 2;
             dst_value = bytes & 0x7;
             bytes >>= 5;
             src_value = bytes & 0x7;
             do_and(src_value, dst_value);
+            break;
         case OpCode::MOV:
             dst_type = static_cast<AddrType>(bytes & 0x3);
             bytes >>= 2;

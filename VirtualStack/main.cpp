@@ -43,6 +43,6 @@ int main(int argc, char **argv) {
     
     VM &vm = VM::instance();
     uint8_t result = vm.execute(bytes);
-    std::cout << "Result: " << result << std::endl;
+    std::cout << "Result: " << static_cast<int>(result) << std::endl;
     return 0;
 }
