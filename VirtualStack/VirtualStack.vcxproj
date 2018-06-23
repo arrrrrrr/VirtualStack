@@ -116,11 +116,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BytecodeParser.cpp" />
+    <ClCompile Include="Instruction.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="VM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BytecodeParser.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="VM.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

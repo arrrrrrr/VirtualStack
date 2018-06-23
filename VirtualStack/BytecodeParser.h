@@ -1,13 +1,14 @@
 #pragma once
 #include "Common.h" 
+#include "Instruction.h"
 
 class BytecodeParser
 {
 public:
-    BytecodeParser(std::vector<uint8_t> &bytes);
+    BytecodeParser();
     ~BytecodeParser();
 
-    std::vector<Function>& parse(std::vector<uint8_t> &bytes);
+    std::vector<Function> parse(std::vector<uint8_t> &bytes);
 
 private:
     OpCode decode_opcode(uint8_t bits);
