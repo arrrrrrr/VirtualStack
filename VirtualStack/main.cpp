@@ -27,17 +27,27 @@ bool read_bytecode_file(const char *filename, std::vector<uint8_t> &bytes) {
 }
 
 int main(int argc, char **argv) {
+#if DEBUG
     if (argc != 1) {
+#else
+    if (argc != 2) {
+#endif
         std::cout << "missing bytecode file" << std::endl;
         return 1;
     }
 
     std::vector<uint8_t> bytes;
+#if DEBUG
+    const char *fn = "..\\..\\bytecode.txt";
+#endif
 
-    const char *fn = "C:\\Users\\mikey\\OneDrive\\Documents\\Projects\\VirtualStack\\bytecode.txt";
-
+#if DEBUG
     if (!read_bytecode_file(fn, bytes)) {
         std::cout << "failed to read bytecode file: " << fn << std::endl;
+#else
+    if (!read_bytecode_file(argv[1], bytes)) {
+        std::cout << "failed to read bytecode file: " << argv[1] << std::endl;
+#endif
         return 1;
     }
     

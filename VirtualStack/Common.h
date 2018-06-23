@@ -10,6 +10,8 @@
 #include <bitset>
 #include <cmath>
 
+#define DEBUG 0
+
 enum class OpCode {
     MOV, // 000
     CAL, // 001
